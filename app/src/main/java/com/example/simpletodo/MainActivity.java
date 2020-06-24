@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> items;
 
     Button addButton;
-    EditText editText;
+    EditText editItem;
     RecyclerView viewItems;
 
     @Override
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         addButton = findViewById(R.id.addButton);
-        editText = findViewById(R.id.editItem);
+        editItem = findViewById(R.id.editItem);
         viewItems = findViewById(R.id.viewItems);
 
         items = new ArrayList<>();
@@ -33,8 +35,27 @@ public class MainActivity extends AppCompatActivity {
         items.add("Go to the Gym");
         items.add("Buy cheese");
 
-        ItemsAdapter itemsAdapter = new ItemsAdapter(items);
+        final ItemsAdapter itemsAdapter = new ItemsAdapter(items);
         viewItems.setAdapter(itemsAdapter);
         viewItems.setLayoutManager(new LinearLayoutManager(this));
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String todoItem = editItem.getText().toString();
+
+                // Add item to the model
+                items.add(todoItem);
+
+                // Notify adapter that an item is inserted
+                itemsAdapter.notifyItemInserted(items.size()-1);
+
+                // Clear text
+                editItem.setText("");
+
+                // Notification for user to consume
+                Toast.makeText(getApplicationContext(), "Item was added", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
