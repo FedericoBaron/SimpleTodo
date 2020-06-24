@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Reference of each view
     Button addButton;
-    EditText editItem;
+    EditText editText;
     RecyclerView rvItems;
 
     ItemsAdapter itemsAdapter;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Sets each variable to its respective view
         addButton = findViewById(R.id.addButton);
-        editItem = findViewById(R.id.editItem);
+        editText = findViewById(R.id.editText);
         rvItems = findViewById(R.id.rvItems);
 
         // Loads items from file to restore saved data
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             // Handler for add button click
             @Override
             public void onClick(View v) {
-                String todoItem = editItem.getText().toString();
+                String todoItem = editText.getText().toString();
 
                 // Add item to the model
                 items.add(todoItem);
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 itemsAdapter.notifyItemInserted(items.size()-1);
 
                 // Clear text
-                editItem.setText("");
+                editText.setText("");
 
                 // Notification for user to consume
                 Toast.makeText(getApplicationContext(), "Item was added", Toast.LENGTH_SHORT).show();
