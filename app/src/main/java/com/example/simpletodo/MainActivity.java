@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button addButton;
     EditText editItem;
-    RecyclerView viewItems;
+    RecyclerView rvItems;
     ItemsAdapter itemsAdapter;
 
     @Override
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         addButton = findViewById(R.id.addButton);
         editItem = findViewById(R.id.editItem);
-        viewItems = findViewById(R.id.viewItems);
+        rvItems = findViewById(R.id.rvItems);
 
         // Loads items from file to restore saved data
         loadItems();
@@ -84,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         itemsAdapter = new ItemsAdapter(items, onLongClickListener, onClickListener);
-        viewItems.setAdapter(itemsAdapter);
-        viewItems.setLayoutManager(new LinearLayoutManager(this));
+        rvItems.setAdapter(itemsAdapter);
+        rvItems.setLayoutManager(new LinearLayoutManager(this));
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
