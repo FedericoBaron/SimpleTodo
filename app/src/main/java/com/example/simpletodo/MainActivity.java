@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Sets each variable to its respective view
         addButton = findViewById(R.id.addButton);
-        editText = findViewById(R.id.editText);
+        editText = findViewById(R.id.editItem);
         rvItems = findViewById(R.id.rvItems);
 
         // Loads items from file to restore saved data
