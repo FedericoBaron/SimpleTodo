@@ -26,8 +26,9 @@ public class EditActivity extends AppCompatActivity {
         // Set text to be the item that's being edited
         editItem.setText(getIntent().getStringExtra(MainActivity.KEY_ITEM_TEXT));
 
-        // When the user is done editing, they click the save button
+        // Listener for save button click
         saveButton.setOnClickListener(new View.OnClickListener() {
+            // Handler for save button click
             @Override
             public void onClick(View v) {
                 // Create an intent which will contain the results

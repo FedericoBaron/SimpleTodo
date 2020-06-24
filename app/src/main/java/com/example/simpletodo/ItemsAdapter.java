@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 // Responsible for displaying data from the model into a row in the recycle view
+// Adapter puts the data in the ViewHolder
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
 
     public interface OnLongClickListener{
@@ -25,32 +26,36 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
     OnLongClickListener longClickListener;
     OnClickListener clickListener;
 
+    // Constructor for adapter
     public ItemsAdapter(List<String> items, OnLongClickListener longClickListener, OnClickListener clickListener) {
         this.items = items;
         this.longClickListener = longClickListener;
         this.clickListener = clickListener;
     }
 
+    // Creates a view
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // Use layout inflator to inflate a view
+        // Inflator turns XML content into a view
         View todoView = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
 
         // Wrap it inside a View Holder and return it
         return new ViewHolder(todoView);
     }
 
+    // Puts data in a particular position into the view holder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         // Grab the item at the position
         String item = items.get(position);
 
         // Bind the item into the specified view holder
         holder.bind(item);
     }
-
 
     // Tells the RV how many items are on the list
     @Override
@@ -77,6 +82,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>{
                     clickListener.onItemClicked(getAdapterPosition());
                 }
             });
+
             tvItem.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {

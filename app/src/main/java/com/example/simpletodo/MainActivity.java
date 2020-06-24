@@ -29,16 +29,21 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> items;
 
+    // Reference of each view
     Button addButton;
     EditText editItem;
     RecyclerView rvItems;
+
     ItemsAdapter itemsAdapter;
 
+    // First thing that runs
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        // Sets each variable to its respective view
         addButton = findViewById(R.id.addButton);
         editItem = findViewById(R.id.editItem);
         rvItems = findViewById(R.id.rvItems);
@@ -46,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
         // Loads items from file to restore saved data
         loadItems();
 
+        // Listener for long click
         ItemsAdapter.OnLongClickListener onLongClickListener = new ItemsAdapter.OnLongClickListener(){
-
+            // Handler for long click
             @Override
             public void onItemLongClicked(int position) {
                 // Delete the item at position from the model
@@ -65,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        // Listener for click
         ItemsAdapter.OnClickListener onClickListener = new ItemsAdapter.OnClickListener() {
+            // Handler for click
             @Override
             public void onItemClicked(int position) {
                 Log.d("MainActivity", "Single click at position " + position);
@@ -82,11 +90,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        // Used to setup view for RV
         itemsAdapter = new ItemsAdapter(items, onLongClickListener, onClickListener);
         rvItems.setAdapter(itemsAdapter);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
 
+        // Listener for add button click
         addButton.setOnClickListener(new View.OnClickListener() {
+            // Handler for add button click
             @Override
             public void onClick(View v) {
                 String todoItem = editItem.getText().toString();
