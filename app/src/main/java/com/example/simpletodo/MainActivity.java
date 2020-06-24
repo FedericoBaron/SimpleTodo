@@ -5,11 +5,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +37,8 @@ public class MainActivity extends AppCompatActivity {
         editItem = findViewById(R.id.editItem);
         viewItems = findViewById(R.id.viewItems);
 
-        items = new ArrayList<>();
-        items.add("Buy milk");
-        items.add("Go to the Gym");
-        items.add("Buy cheese");
+        // Loads items from file to restore saved data
+        loadItems();
 
         ItemsAdapter.OnLongClickListener onLongClickListener = new ItemsAdapter.OnLongClickListener(){
 
@@ -48,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // Notification for user to consume
                 Toast.makeText(getApplicationContext(), "Item was removed", Toast.LENGTH_SHORT).show();
+
+                // Save items to file
+                saveItems();
+
             }
         };
 
@@ -71,7 +79,37 @@ public class MainActivity extends AppCompatActivity {
 
                 // Notification for user to consume
                 Toast.makeText(getApplicationContext(), "Item was added", Toast.LENGTH_SHORT).show();
+
+                // Save items to file
+                saveItems();
             }
         });
     }
+
+    private File getDataFile(){
+        return new File(getFilesDir(), "data.txt");
+    }
+
+    // This function will load items by reading every line of the data file
+    private void loadItems(){
+        try {
+            items = new ArrayList<>(FileUtils.readLines(getDataFile(), Charset.defaultCharset()));
+        } catch(IOException e){
+            Log.e("MainActivity", "Error reading items", e);
+
+            // We need to initialize ArrayList if try fails
+            items = new ArrayList<>();
+        }
+    }
+
+    // This function saves items by writing them into the data file
+    private void saveItems(){
+        try {
+            FileUtils.writeLines(getDataFile(), items);
+        } catch(IOException e) {
+            Log.e("MainActivity", "Error writing items", e);
+        }
+
+    }
+
 }
